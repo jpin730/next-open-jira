@@ -1,9 +1,10 @@
-import { Inter } from 'next/font/google';
-import Head from 'next/head';
+import { NextPage } from "next";
+import { Inter } from "next/font/google";
+import Head from "next/head";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+const HomePage: NextPage = () => {
   return (
     <>
       <Head>
@@ -14,4 +15,6 @@ export default function Home() {
       </main>
     </>
   );
-}
+};
+
+export default HomePage;

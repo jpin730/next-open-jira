@@ -6,5 +6,8 @@
     "plugin:tailwindcss/recommended",
     "next/core-web-vitals",
     "prettier"
-  ]
+  ],
+  "rules": {
+    "no-console": "error"
+  }
 }
