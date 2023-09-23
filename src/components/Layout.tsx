@@ -1,15 +1,15 @@
-import { Box } from '@mui/material';
-import Head from 'next/head';
-import { FC, ReactNode } from 'react';
-import { NavBar } from './NavBar';
+import { Box } from '@mui/material'
+import Head from 'next/head'
+import { type FC, type ReactNode } from 'react'
+import { NavBar } from './NavBar'
 
 interface Props {
-  title?: string;
-  children: ReactNode;
+  title?: string
+  children: ReactNode
 }
 
 export const Layout: FC<Props> = ({ title = '', children }) => {
-  const pageTitle = ['Next Open Jira', title].join(' | ');
+  const pageTitle = ['Next Open Jira', title].join(' | ')
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Head>
@@ -19,5 +19,5 @@ export const Layout: FC<Props> = ({ title = '', children }) => {
 
       <Box sx={{ padding: '1rem' }}>{children}</Box>
     </Box>
-  );
-};
+  )
+}

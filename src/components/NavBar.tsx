@@ -1,6 +1,6 @@
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { FC } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material'
+import { type FC } from 'react'
+import MenuIcon from '@mui/icons-material/Menu'
 
 export const NavBar: FC = () => {
   return (
@@ -13,5 +13,5 @@ export const NavBar: FC = () => {
         <Typography variant="h6">Next Open Jira</Typography>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
