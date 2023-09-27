@@ -22,9 +22,11 @@
     "next": "13.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.0.0",
@@ -39,6 +41,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "eslint",
-    "*.*": "prettier --write"
+    "*.{ts,tsx,css}": "prettier --write"
   }
 }
