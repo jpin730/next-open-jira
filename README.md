@@ -1,6 +1,6 @@
 # Next Open Jira
 
-This app is a Jira clone using TailwindCSS and Material UI.
+This app is a Jira clone using Material UI, drag and drop without library.
 
 ## Usage
 

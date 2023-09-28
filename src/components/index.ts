@@ -1,3 +1,6 @@
+export * from './EntryCard'
+export * from './EntryList'
 export * from './Layout'
 export * from './NavBar'
+export * from './NewEntry'
 export * from './SideBar'
