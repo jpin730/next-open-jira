@@ -1,43 +1,40 @@
 import { EntriesContext } from '@/contexts/entries'
-import { EntryStatus } from '@/interfaces/Entry'
+import { type Entry, EntryStatus } from '@/interfaces/Entry'
 import { List, Paper } from '@mui/material'
-import { useContext, type FC, useMemo } from 'react'
+import { type DragEvent, useContext, type FC, useMemo } from 'react'
 import { EntryCard, NewEntry } from '.'
+import { UiContext } from '@/contexts/ui'
+import styles from './EntryList.module.css'
 
 interface Props {
   status: EntryStatus
 }
 
 export const EntryList: FC<Props> = ({ status }) => {
-  const { entries /* updateEntry */ } = useContext(EntriesContext)
-  // const { isDragging, endDragging } = useContext( UiContext );
+  const { entries, updateEntry } = useContext(EntriesContext)
+  const { isDragging, endDragging } = useContext(UiContext)
 
   const entriesByStatus = useMemo(
     () => entries.filter((entry) => entry.status === status),
     [entries, status],
   )
 
-  // const allowDrop = ( event: DragEvent<HTMLDivElement> ) => {
-  //     event.preventDefault();
-  // }
+  const allowDrop = (event: DragEvent<HTMLDivElement>): void => {
+    event.preventDefault()
+  }
 
-  // const onDropEntry = ( event: DragEvent<HTMLDivElement> ) => {
-  //     const id = event.dataTransfer.getData('text');
-
-  //     const entry = entries.find( e => e._id === id )!;
-  //     entry.status = status;
-  //     updateEntry( entry );
-  //     endDragging();
-  // }
+  const onDropEntry = (event: DragEvent<HTMLDivElement>): void => {
+    const id = event.dataTransfer.getData('id')
+    const entry = entries.find((e) => e._id === id) as Entry
+    updateEntry({ ...entry, status })
+    endDragging()
+  }
 
   return (
-    <div
-    // onDrop={ onDropEntry }
-    // onDragOver={ allowDrop }
-    // className={ isDragging ? styles.dragging : '' }
-    >
+    <div onDrop={onDropEntry} onDragOver={allowDrop}>
       <Paper
         variant="outlined"
+        className={isDragging ? styles.dragging : ''}
         sx={{
           height: 'calc(100vh - 180px)',
           overflowY: 'auto',
@@ -45,7 +42,7 @@ export const EntryList: FC<Props> = ({ status }) => {
         }}
       >
         <List
-          sx={{ /*  opacity: isDragging ? 0.2 : 1, */ transition: 'all .3s' }}
+          sx={{ opacity: isDragging ? 0.5 : 1, transition: 'opacity 300ms' }}
         >
           {entriesByStatus.map((entry) => (
             <EntryCard key={entry._id} entry={entry} />
