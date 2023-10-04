@@ -45,7 +45,9 @@ const getEntry = async (
     }
 
     res.status(200).json(entryExist)
-  } catch {
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
     await db.disconnect()
     res.status(500).json({ message: 'Something went wrong.' })
   }
@@ -79,7 +81,9 @@ const updateEntry = async (
     )
     await db.disconnect()
     res.status(200).json(updatedEntry as IEntry)
-  } catch {
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
     await db.disconnect()
     res.status(400).json({ message: 'Something went wrong.' })
   }
