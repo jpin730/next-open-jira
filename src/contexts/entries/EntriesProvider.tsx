@@ -19,12 +19,25 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, entriesInitialState)
 
   const addNewEntry = async (description: string): Promise<void> => {
-    const { data } = await nextApi.post<Entry>('/entries', { description })
-    dispatch({ type: EntriesActionType.AddEntry, payload: data })
+    try {
+      const { data } = await nextApi.post<Entry>('/entries', { description })
+      dispatch({ type: EntriesActionType.AddEntry, payload: data })
+    } catch {}
   }
 
-  const updateEntry = (entry: Entry): void => {
-    dispatch({ type: EntriesActionType.UpdateEntry, payload: entry })
+  const updateEntry = async ({
+    _id,
+    status,
+    description,
+  }: Entry): Promise<void> => {
+    try {
+      const { data } = await nextApi.put<Entry>(`/entries/${_id}`, {
+        description,
+        status,
+      })
+
+      dispatch({ type: EntriesActionType.UpdateEntry, payload: data })
+    } catch {}
   }
 
   const fetchEntries = async (): Promise<void> => {
