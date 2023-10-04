@@ -35,7 +35,6 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         description,
         status,
       })
-
       dispatch({ type: EntriesActionType.UpdateEntry, payload: data })
     } catch {}
   }

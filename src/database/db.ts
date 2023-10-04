@@ -1,37 +1,33 @@
 import mongoose, { ConnectionStates } from 'mongoose'
 
-let dbState = ConnectionStates.disconnected
-
 export const connect = async (): Promise<void> => {
-  if (dbState !== ConnectionStates.disconnected) {
+  const connection = mongoose.connections.at(0)
+  if (
+    connection !== undefined &&
+    connection.readyState === ConnectionStates.connected
+  ) {
     // eslint-disable-next-line no-console
-    console.log('Already connected to database.')
+    console.log('Already connected.')
     return
   }
 
-  const connection = mongoose.connections.at(0)
-  if (connection !== undefined) {
-    dbState = connection.readyState
-    if (dbState === ConnectionStates.connected) {
-      // eslint-disable-next-line no-console
-      console.log('Using existing connection.')
-      return
-    }
-    await mongoose.disconnect()
-  }
-
   await mongoose.connect(process.env.DB_CNN ?? '')
-  dbState = ConnectionStates.connected
   // eslint-disable-next-line no-console
-  console.log('Database connected.')
+  console.log(`Database connected. (${mongoose.connections.length})`)
 }
 
 export const disconnect = async (): Promise<void> => {
-  if (process.env.NODE_ENV === 'development') return
-
-  if (dbState === ConnectionStates.disconnected) return
+  const connection = mongoose.connections.at(0)
+  if (
+    connection !== undefined &&
+    connection.readyState === ConnectionStates.disconnected
+  ) {
+    // eslint-disable-next-line no-console
+    console.log('Already disconnected.')
+    return
+  }
 
   await mongoose.disconnect()
   // eslint-disable-next-line no-console
-  console.log('Database disconnected.')
+  console.log(`Database disconnected. (${mongoose.connections.length})`)
 }
