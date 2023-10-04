@@ -4,6 +4,7 @@ import { type EntriesState } from '.'
 export enum EntriesActionType {
   AddEntry = '[Entry] Add entry',
   UpdateEntry = '[Entry] Update entry',
+  FetchEntries = '[Entry] Fetch entries',
 }
 
 type EntriesAction =
@@ -14,6 +15,10 @@ type EntriesAction =
   | {
       type: EntriesActionType.UpdateEntry
       payload: Entry
+    }
+  | {
+      type: EntriesActionType.FetchEntries
+      payload: Entry[]
     }
 
 export const entriesReducer = (
@@ -37,6 +42,12 @@ export const entriesReducer = (
           }
           return entry
         }),
+      }
+
+    case EntriesActionType.FetchEntries:
+      return {
+        ...state,
+        entries: [...action.payload],
       }
 
     default:

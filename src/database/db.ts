@@ -27,6 +27,8 @@ export const connect = async (): Promise<void> => {
 }
 
 export const disconnect = async (): Promise<void> => {
+  if (process.env.NODE_ENV === 'development') return
+
   if (dbState === ConnectionStates.disconnected) return
 
   await mongoose.disconnect()

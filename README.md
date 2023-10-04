@@ -19,3 +19,7 @@ yarn dev
 ## Deployed app
 
 <https://next-open-jira-jpin730.vercel.app>
+
+## Api Documentation
+
+<https://documenter.getpostman.com/view/12311811/2s9YJdX3Gy>
