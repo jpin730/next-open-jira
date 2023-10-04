@@ -85,6 +85,6 @@ const updateEntry = async (
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(400).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong.' })
   }
 }

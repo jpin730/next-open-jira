@@ -3,7 +3,7 @@ import mongoose, { ConnectionStates } from 'mongoose'
 let dbState = ConnectionStates.disconnected
 
 export const connect = async (): Promise<void> => {
-  if (dbState === ConnectionStates.connected) {
+  if (dbState !== ConnectionStates.disconnected) {
     // eslint-disable-next-line no-console
     console.log('Already connected to database.')
     return
