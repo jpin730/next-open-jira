@@ -25,7 +25,7 @@ export const NewEntry: FC = () => {
   const onSave = (): void => {
     if (inputValue.length === 0) return
 
-    addNewEntry(inputValue)
+    void addNewEntry(inputValue)
     setIsAddingEntry(false)
     setTouched(false)
     setInputValue('')
