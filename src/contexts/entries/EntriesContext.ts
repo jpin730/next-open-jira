@@ -3,7 +3,7 @@ import { createContext } from 'react'
 
 interface ContextProps {
   entries: Entry[]
-  addNewEntry: (description: string) => void
+  addNewEntry: (description: string) => Promise<void>
   updateEntry: (entry: Entry) => void
 }
 

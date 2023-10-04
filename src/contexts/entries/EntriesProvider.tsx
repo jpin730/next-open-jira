@@ -1,7 +1,6 @@
-import { EntryStatus, type Entry } from '@/interfaces/Entry'
+import { type Entry } from '@/interfaces/Entry'
 import { type FC, useReducer, type ReactNode, useEffect } from 'react'
 import { EntriesActionType, EntriesContext, entriesReducer } from '.'
-import { v4 as uuidv4 } from 'uuid'
 import { nextApi } from '@/api'
 
 export interface EntriesState {
@@ -19,15 +18,9 @@ interface Props {
 export const EntriesProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, entriesInitialState)
 
-  const addNewEntry = (description: string): void => {
-    const newEntry: Entry = {
-      _id: uuidv4(),
-      description,
-      createdAt: Date.now(),
-      status: EntryStatus.pending,
-    }
-
-    dispatch({ type: EntriesActionType.AddEntry, payload: newEntry })
+  const addNewEntry = async (description: string): Promise<void> => {
+    const { data } = await nextApi.post<Entry>('/entries', { description })
+    dispatch({ type: EntriesActionType.AddEntry, payload: data })
   }
 
   const updateEntry = (entry: Entry): void => {
@@ -35,8 +28,8 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
   }
 
   const fetchEntries = async (): Promise<void> => {
-    const { data } = await nextApi.get<{ entries: Entry[] }>('/entries')
-    dispatch({ type: EntriesActionType.FetchEntries, payload: data.entries })
+    const { data } = await nextApi.get<Entry[]>('/entries')
+    dispatch({ type: EntriesActionType.FetchEntries, payload: data })
   }
 
   useEffect(() => {

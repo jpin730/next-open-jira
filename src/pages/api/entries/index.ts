@@ -2,7 +2,7 @@ import { db } from '@/database'
 import { EntryModel, type IEntry } from '@/models/Entry'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 
-type Data = { message: string } | { entries: IEntry[] }
+type Data = { message: string } | IEntry[] | IEntry
 
 export default function handler(
   req: NextApiRequest,
@@ -24,11 +24,12 @@ const getEntries = async (res: NextApiResponse<Data>): Promise<void> => {
   await db.connect()
   try {
     const entries = await EntryModel.find().sort({ createdAt: 'ascending' })
-    res.status(200).json({ entries })
+    await db.disconnect()
+    res.status(200).json(entries)
   } catch {
+    await db.disconnect()
     res.status(500).json({ message: 'Something went wrong.' })
   }
-  await db.disconnect()
 }
 
 const postEntry = async (
@@ -45,10 +46,10 @@ const postEntry = async (
   await db.connect()
   try {
     await newEntry.save()
-    res.status(201).json({ message: 'Entry created' })
+    await db.disconnect()
+    res.status(201).json(newEntry)
   } catch {
+    await db.disconnect()
     res.status(500).json({ message: 'Something went wrong.' })
   }
-
-  await db.disconnect()
 }
