@@ -39,6 +39,13 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     } catch {}
   }
 
+  const resetEntries = async (): Promise<void> => {
+    try {
+      await nextApi.get<Entry>('/seed')
+      await fetchEntries()
+    } catch {}
+  }
+
   const fetchEntries = async (): Promise<void> => {
     const { data } = await nextApi.get<Entry[]>('/entries')
     dispatch({ type: EntriesActionType.FetchEntries, payload: data })
@@ -54,6 +61,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         ...state,
         addNewEntry,
         updateEntry,
+        resetEntries,
       }}
     >
       {children}

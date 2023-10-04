@@ -5,6 +5,7 @@ interface ContextProps {
   entries: Entry[]
   addNewEntry: (description: string) => Promise<void>
   updateEntry: (entry: Entry) => Promise<void>
+  resetEntries: () => Promise<void>
 }
 
 export const EntriesContext = createContext({} as unknown as ContextProps)
