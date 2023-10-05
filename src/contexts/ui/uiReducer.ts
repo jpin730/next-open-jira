@@ -6,6 +6,7 @@ export enum UiActionType {
   SetIsAddingEntry = '[UI] Set isAddingEntry',
   StartDragging = '[UI] Start Dragging',
   EndDragging = '[UI] End Dragging',
+  SetLoading = '[UI] Set Loading',
 }
 
 type UiAction =
@@ -24,6 +25,10 @@ type UiAction =
     }
   | {
       type: UiActionType.EndDragging
+    }
+  | {
+      type: UiActionType.SetLoading
+      payload: boolean
     }
 
 export const uiReducer = (state: UiState, action: UiAction): UiState => {
@@ -56,6 +61,12 @@ export const uiReducer = (state: UiState, action: UiAction): UiState => {
       return {
         ...state,
         isDragging: false,
+      }
+
+    case UiActionType.SetLoading:
+      return {
+        ...state,
+        isLoading: action.payload,
       }
 
     default:

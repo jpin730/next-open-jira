@@ -5,12 +5,14 @@ export interface UiState {
   sideMenuOpen: boolean
   isAddingEntry: boolean
   isDragging: boolean
+  isLoading: boolean
 }
 
 const uiInitialState: UiState = {
   sideMenuOpen: false,
   isAddingEntry: false,
   isDragging: false,
+  isLoading: false,
 }
 
 interface Props {
@@ -40,6 +42,10 @@ export const UiProvider: FC<Props> = ({ children }) => {
     dispatch({ type: UiActionType.EndDragging })
   }
 
+  const setLoading = (isLoading: boolean): void => {
+    dispatch({ type: UiActionType.SetLoading, payload: isLoading })
+  }
+
   return (
     <UiContext.Provider
       value={{
@@ -49,6 +55,7 @@ export const UiProvider: FC<Props> = ({ children }) => {
         setIsAddingEntry,
         endDragging,
         startDragging,
+        setLoading,
       }}
     >
       {children}
