@@ -1,5 +1,6 @@
 import { UiContext } from '@/contexts/ui'
 import { type Entry } from '@/interfaces/Entry'
+import { getTimeDistance } from '@/utils/getTimeDistance'
 import {
   Card,
   CardActionArea,
@@ -7,6 +8,7 @@ import {
   CardContent,
   Typography,
 } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useContext, type DragEvent, type FC } from 'react'
 
 interface Props {
@@ -14,7 +16,9 @@ interface Props {
 }
 
 export const EntryCard: FC<Props> = ({ entry }) => {
-  const { startDragging, endDragging } = useContext(UiContext)
+  const { startDragging, endDragging, setLoading, setIsAddingEntry } =
+    useContext(UiContext)
+  const router = useRouter()
 
   const onDragStart = (event: DragEvent): void => {
     event.dataTransfer.setData('id', entry._id)
@@ -25,6 +29,14 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     endDragging()
   }
 
+  const onClickCard = (): void => {
+    setIsAddingEntry(false)
+    setLoading(true)
+    void router.push(`/${entry._id}`).finally(() => {
+      setLoading(false)
+    })
+  }
+
   return (
     <Card
       sx={{ marginBottom: '1rem' }}
@@ -32,6 +44,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
       elevation={4}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onClick={onClickCard}
     >
       <CardActionArea>
         <CardContent>
@@ -43,7 +56,9 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         <CardActions
           sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}
         >
-          <Typography variant="body2">30 min ago</Typography>
+          <Typography variant="body2" color="gray">{`Created ${getTimeDistance(
+            entry.createdAt,
+          )} ago`}</Typography>
         </CardActions>
       </CardActionArea>
     </Card>

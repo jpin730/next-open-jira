@@ -54,7 +54,7 @@ export const NewEntry: FC = () => {
 
           <Box display="flex" justifyContent="end" gap={2}>
             <Button variant="text" onClick={onCancel}>
-              Cancelar
+              Cancel
             </Button>
 
             <Button
