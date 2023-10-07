@@ -23,6 +23,9 @@ export default function handler(
     case 'GET':
       return getEntry(req, res)
 
+    case 'DELETE':
+      return deleteEntry(req, res)
+
     default:
       res.status(400).json({ message: 'Endpoint does not exist.' })
   }
@@ -79,6 +82,33 @@ const updateEntry = async (
       { description, status },
       { runValidators: true, new: true },
     )
+    await db.disconnect()
+    res.status(200).json(updatedEntry as IEntry)
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    await db.disconnect()
+    res.status(500).json({ message: 'Something went wrong.' })
+  }
+}
+
+const deleteEntry = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>,
+): Promise<void> => {
+  const { id } = req.query
+
+  await db.connect()
+  try {
+    const entryToDelete = await EntryModel.findById(id)
+
+    if (entryToDelete === null) {
+      await db.disconnect()
+      res.status(400).json({ message: 'Entry does not exist.' })
+      return
+    }
+
+    const updatedEntry = await EntryModel.findByIdAndRemove(id)
     await db.disconnect()
     res.status(200).json(updatedEntry as IEntry)
   } catch (error) {

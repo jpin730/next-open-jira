@@ -5,6 +5,7 @@ interface ContextProps {
   entries: Entry[]
   addNewEntry: (description: string) => Promise<void>
   updateEntry: (entry: Entry) => Promise<void>
+  deleteEntry: (entry: Entry) => Promise<void>
   resetEntries: () => Promise<void>
 }
 

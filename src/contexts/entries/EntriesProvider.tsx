@@ -77,6 +77,17 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
     }
   }
 
+  const deleteEntry = async ({ _id }: Entry): Promise<void> => {
+    setLoading(true)
+    try {
+      const { data } = await nextApi.delete<Entry>(`/entries/${_id}`)
+      dispatch({ type: EntriesActionType.DeleteEntry, payload: data })
+      setLoading(false)
+    } catch {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     void fetchEntries()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,6 +100,7 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         addNewEntry,
         updateEntry,
         resetEntries,
+        deleteEntry,
       }}
     >
       {children}

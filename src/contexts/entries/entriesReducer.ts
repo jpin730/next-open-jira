@@ -5,6 +5,7 @@ export enum EntriesActionType {
   AddEntry = '[Entry] Add entry',
   UpdateEntry = '[Entry] Update entry',
   FetchEntries = '[Entry] Fetch entries',
+  DeleteEntry = '[Entry] Delete entries',
 }
 
 type EntriesAction =
@@ -19,6 +20,10 @@ type EntriesAction =
   | {
       type: EntriesActionType.FetchEntries
       payload: Entry[]
+    }
+  | {
+      type: EntriesActionType.DeleteEntry
+      payload: Entry
     }
 
 export const entriesReducer = (
@@ -48,6 +53,14 @@ export const entriesReducer = (
       return {
         ...state,
         entries: [...action.payload],
+      }
+
+    case EntriesActionType.DeleteEntry:
+      return {
+        ...state,
+        entries: state.entries.filter(
+          (entry) => entry._id !== action.payload._id,
+        ),
       }
 
     default:

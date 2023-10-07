@@ -39,7 +39,7 @@ interface Props {
 }
 
 export const EntryPage: NextPage<Props> = ({ entry }) => {
-  const { updateEntry } = useContext(EntriesContext)
+  const { updateEntry, deleteEntry } = useContext(EntriesContext)
   const { setLoading } = useContext(UiContext)
 
   const router = useRouter()
@@ -88,6 +88,11 @@ export const EntryPage: NextPage<Props> = ({ entry }) => {
     returnToHome()
   }
 
+  const onDelete = async (): Promise<void> => {
+    await deleteEntry(entry)
+    returnToHome()
+  }
+
   return (
     <Layout
       title={
@@ -107,7 +112,12 @@ export const EntryPage: NextPage<Props> = ({ entry }) => {
             title={`Entry`}
             subheader={`Created ${getTimeDistance(entry.createdAt)} ago`}
             action={
-              <IconButton color="error">
+              <IconButton
+                color="error"
+                onClick={() => {
+                  void onDelete()
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
             }
