@@ -1,18 +1,9 @@
 import { EntryList, Layout } from '@/components'
-import { EntriesContext } from '@/contexts/entries'
 import { EntryStatus } from '@/interfaces/Entry'
 import { Card, CardHeader, Grid } from '@mui/material'
 import { type NextPage } from 'next'
-import { useContext, useEffect } from 'react'
 
 const HomePage: NextPage = () => {
-  const { fetchEntries } = useContext(EntriesContext)
-
-  useEffect(() => {
-    void fetchEntries()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <Layout title="Home">
       <Grid container spacing={2}>

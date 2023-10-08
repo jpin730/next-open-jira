@@ -31,6 +31,7 @@ import { getEntryById } from '@/database'
 import { UiContext } from '@/contexts/ui'
 import { useRouter } from 'next/router'
 import { getTimeDistance } from '@/utils/getTimeDistance'
+import { truncateText } from '@/utils/truncateText'
 
 const validStatus = Object.values(EntryStatus)
 
@@ -94,13 +95,7 @@ export const EntryPage: NextPage<Props> = ({ entry }) => {
   }
 
   return (
-    <Layout
-      title={
-        inputValue.length > 10 || inputValue.length === 0
-          ? inputValue.substring(0, 10) + '...'
-          : inputValue
-      }
-    >
+    <Layout title={truncateText(inputValue.trim(), 10)}>
       <Box
         display="flex"
         justifyContent="center"
