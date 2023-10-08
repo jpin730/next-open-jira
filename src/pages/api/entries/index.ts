@@ -30,7 +30,7 @@ const getEntries = async (res: NextApiResponse<Data>): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(500).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong. Try again.' })
   }
 }
 
@@ -54,6 +54,6 @@ const postEntry = async (
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(500).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong. Try again.' })
   }
 }

@@ -52,7 +52,7 @@ const getEntry = async (
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(500).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong. Try again.' })
   }
 }
 
@@ -68,7 +68,7 @@ const updateEntry = async (
 
     if (entryToUpdate === null) {
       await db.disconnect()
-      res.status(400).json({ message: 'Entry does not exist.' })
+      res.status(400).json({ message: 'Entry does not exist. Try again.' })
       return
     }
 
@@ -88,7 +88,7 @@ const updateEntry = async (
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(500).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong. Try again.' })
   }
 }
 
@@ -115,6 +115,6 @@ const deleteEntry = async (
     // eslint-disable-next-line no-console
     console.log(error)
     await db.disconnect()
-    res.status(500).json({ message: 'Something went wrong.' })
+    res.status(500).json({ message: 'Something went wrong. Try again.' })
   }
 }
