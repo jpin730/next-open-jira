@@ -7,6 +7,7 @@ export enum UiActionType {
   StartDragging = '[UI] Start Dragging',
   EndDragging = '[UI] End Dragging',
   SetLoading = '[UI] Set Loading',
+  ToggleTheme = '[UI] Toggle Theme',
 }
 
 type UiAction =
@@ -29,6 +30,10 @@ type UiAction =
   | {
       type: UiActionType.SetLoading
       payload: boolean
+    }
+  | {
+      type: UiActionType.ToggleTheme
+      payload?: boolean
     }
 
 export const uiReducer = (state: UiState, action: UiAction): UiState => {
@@ -67,6 +72,12 @@ export const uiReducer = (state: UiState, action: UiAction): UiState => {
       return {
         ...state,
         isLoading: action.payload,
+      }
+
+    case UiActionType.ToggleTheme:
+      return {
+        ...state,
+        isDarkTheme: action.payload ?? !state.isDarkTheme,
       }
 
     default:

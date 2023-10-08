@@ -10,7 +10,6 @@ export const LoadingSpinner: FC = () => {
       {isLoading && (
         <Backdrop
           open
-          invisible
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
             cursor: 'progress',

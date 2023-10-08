@@ -1,6 +1,6 @@
 # Next Open Jira
 
-This app is a Jira clone using Material UI, drag and drop without library and Next API Routes connected to MongoDB.
+This app is a Jira clone using Material UI (dynamic dark/light theme), drag and drop without library and Next API Routes connected to MongoDB.
 
 ## Usage
 
